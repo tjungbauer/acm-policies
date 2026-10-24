@@ -35,8 +35,12 @@ policies:
     consolidateManifests: false
     placement:
       labelSelector:
-        matchLabels:
-          gitops: enabled
+        matchExpressions:
+          - key: name
+            operator: In
+            values:
+              - sno
+              - bm
     manifests:
       - path: input/gitops-bootstrap/01-namespace.yaml
       - path: input/gitops-bootstrap/02-operatorpolicy.yaml
