@@ -29,3 +29,18 @@ policies:
     manifests:
       - path: input/no-kubeadmin/
         complianceType: mustnothave
+  - name: gitops-bootstrap
+    remediationAction: enforce
+    orderManifests: true
+    consolidateManifests: false
+    placement:
+      labelSelector:
+        matchLabels:
+          gitops: enabled
+    manifests:
+      - path: input/gitops-bootstrap/01-namespace.yaml
+      - path: input/gitops-bootstrap/02-operatorpolicy.yaml
+      - path: input/gitops-bootstrap/03-controller-rbac.yaml
+      # public repository, no credentials needed
+      # - path: input/gitops-bootstrap/04-repo-credentials.yaml
+      - path: input/gitops-bootstrap/05-root-application.yaml
