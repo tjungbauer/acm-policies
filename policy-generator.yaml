@@ -9,10 +9,11 @@ policyDefaults:
   placement:
     labelSelector:
       matchExpressions:
-        - key: environment
+        - key: name
           operator: In
           values:
-            - production
+            - sno
+            - bm
 policies:
   - name: service-mesh
     remediationAction: enforce
