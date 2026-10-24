@@ -1,0 +1,30 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: PolicyGenerator
+metadata:
+  name: cluster-baseline
+policyDefaults:
+  namespace: acm-policies
+  remediationAction: inform
+  severity: medium
+  placement:
+    labelSelector:
+      matchExpressions:
+        - key: environment
+          operator: In
+          values:
+            - production
+policies:
+  - name: service-mesh
+    remediationAction: enforce
+    orderManifests: true
+    consolidateManifests: false
+    manifests:
+      - path: input/service-mesh/01-subscription.yaml
+      - path: input/service-mesh/02-namespace-istio-system.yaml
+      - path: input/service-mesh/03-namespace-istio-cni.yaml
+      - path: input/service-mesh/04-istiocni.yaml
+      - path: input/service-mesh/05-istio.yaml
+  - name: no-kubeadmin
+    manifests:
+      - path: input/no-kubeadmin/
+        complianceType: mustnothave
